@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using MT.FreeCourse.Services.Catalog.Dtos;
+using MT.FreeCourse.Services.Catalog.Services;
 using MT.FreeCourse.Services.Catalog.Settings;
 using System.Configuration;
 
@@ -10,11 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(CategoryDto));// Class in baglı oldugu Assembly deki tum mapper lari tarayacak.
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
-builder.Services.AddSingleton<IDatabaseSettings>(sp=>
+builder.Services.AddSingleton<IDatabaseSettings>(sp =>
 {
     return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-})
-
+});
+builder.Services.AddScoped<ICategoryService,CategoryService>();
 
 
 
