@@ -75,6 +75,7 @@ namespace MT.FreeCourse.Services.Catalog.Services
         {
             var newCourse = _mapper.Map<Course>(courseCreateDto);
             newCourse.CreatedTime = DateTime.Now;
+            //newCourse.Id=Guid.NewGuid().ToString();
             await _courseCollection.InsertOneAsync(newCourse);
 
             return Response<CourseDto>.Success(_mapper.Map<CourseDto>(newCourse), 201);
