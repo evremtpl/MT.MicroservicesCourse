@@ -30,8 +30,8 @@ namespace MT.FreeCourse.IdentityServer
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection123")));
+            services.AddDbContext<ApplicationDbContext>();
+            
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
