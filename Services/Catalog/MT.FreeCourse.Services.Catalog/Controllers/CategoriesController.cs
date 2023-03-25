@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MT.FreeCourse.Services.Catalog.Dtos;
 using MT.FreeCourse.Services.Catalog.Services;
@@ -6,6 +7,7 @@ using MT.FreeCourse.Shared.ControllerBases;
 
 namespace MT.FreeCourse.Services.Catalog.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : CustomBaseController
