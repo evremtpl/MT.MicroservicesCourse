@@ -4,6 +4,7 @@
 
 using IdentityServer4;
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 
 namespace MT.FreeCourse.IdentityServer
@@ -16,18 +17,21 @@ namespace MT.FreeCourse.IdentityServer
             new ApiResource("resource_photo_stock"){Scopes={"photo_stock_fullpermission"}},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
-        public static IEnumerable<IdentityResource> IdentityResources =>
+        public static IEnumerable<IdentityResource> IdentityResources => //values that should be in the token
                    new IdentityResource[]
                    {
-
+                       new IdentityResources.Email(),
+                       new IdentityResources.OpenId(),
+                       new IdentityResources.Profile(),
+                       new IdentityResource(){Name="roles", DisplayName="Roles",Description="User Roles",UserClaims= new[]{"role"} }
                    };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
                 new ApiScope("catalog_fullpermission","Catalog için full erişim"),
-                 new ApiScope("photo_stock_fullpermission","Photo Stock için full erişim"),
-                  new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
+                new ApiScope("photo_stock_fullpermission","Photo Stock için full erişim"),
+                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
             };
 
         public static IEnumerable<Client> Clients =>
@@ -43,7 +47,26 @@ namespace MT.FreeCourse.IdentityServer
 
                     AllowedScopes = { "catalog_fullpermission", "photo_stock_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
                 },
+                new Client
+                {
+                    ClientId = "WebMvcClientForUser",
+                    ClientName = "Asp.Net Core Mvc",
 
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OpenId ,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess, // for refresh token,
+                        "roles"
+                         },
+                    AccessTokenLifetime=1*60*60,//one hour
+                    RefreshTokenExpiration=TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,//60 days
+                    RefreshTokenUsage=TokenUsage.ReUse
+                }
             };
     }
 }
