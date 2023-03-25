@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MT.FreeCourse.IdentityServer.Dtos;
@@ -6,10 +7,12 @@ using MT.FreeCourse.IdentityServer.Models;
 using MT.FreeCourse.Shared.Dtos;
 using System.Linq;
 using System.Threading.Tasks;
+using static IdentityServer4.IdentityServerConstants;
 
 namespace MT.FreeCourse.IdentityServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(LocalApi.PolicyName)]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {

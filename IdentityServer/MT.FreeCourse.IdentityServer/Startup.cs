@@ -28,6 +28,8 @@ namespace MT.FreeCourse.IdentityServer
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddLocalApiAuthentication(); //Thats why Identity Server
             services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationDbContext>(options=>
@@ -81,6 +83,7 @@ namespace MT.FreeCourse.IdentityServer
 
             app.UseRouting();
             app.UseIdentityServer();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
