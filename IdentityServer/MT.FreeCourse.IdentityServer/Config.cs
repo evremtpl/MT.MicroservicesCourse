@@ -51,7 +51,7 @@ namespace MT.FreeCourse.IdentityServer
                 {
                     ClientId = "WebMvcClientForUser",
                     ClientName = "Asp.Net Core Mvc",
-
+                    AllowOfflineAccess=true,
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     ClientSecrets = { new Secret("secret".Sha256()) },
 
@@ -60,6 +60,7 @@ namespace MT.FreeCourse.IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId ,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.OfflineAccess, // for refresh token,
+                        IdentityServerConstants.LocalApi.ScopeName,
                         "roles"
                          },
                     AccessTokenLifetime=1*60*60,//one hour
