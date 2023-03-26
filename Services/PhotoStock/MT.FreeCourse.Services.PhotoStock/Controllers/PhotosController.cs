@@ -32,7 +32,7 @@ namespace MT.FreeCourse.Services.PhotoStock.Controllers
                 return CreateActionResultInstance(Response<PhotoDto>.Fail("Photo is empty", 400));
         }
 
-        public async Task<IActionResult> PhotoDelete(string photoUrl, CancellationToken cancellationToken)
+        public IActionResult PhotoDelete(string photoUrl, CancellationToken cancellationToken)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos" + photoUrl);
 
@@ -41,7 +41,7 @@ namespace MT.FreeCourse.Services.PhotoStock.Controllers
                 return  CreateActionResultInstance(Response<NoContent>.Fail("photo not found",404));
             }
             System.IO.File.Delete(path);
-            return CreateActionResultInstance(Response<NoContent>.Success(204);
+            return CreateActionResultInstance(Response<NoContent>.Success(204));
         }
     }
 }
