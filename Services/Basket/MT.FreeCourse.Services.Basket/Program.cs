@@ -1,10 +1,14 @@
 using Microsoft.Extensions.Options;
 using MT.FreeCourse.Services.Basket.Services;
 using MT.FreeCourse.Services.Basket.Settings;
+using MT.FreeCourse.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();  
+builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.Configure<RedisSettings>(builder.Configuration.GetSection("RedisSettings"));
 builder.Services.AddSingleton<RedisService>(sp =>
 {
