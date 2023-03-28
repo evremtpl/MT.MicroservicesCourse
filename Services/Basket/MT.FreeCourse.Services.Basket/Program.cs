@@ -5,16 +5,18 @@ using Microsoft.Extensions.Options;
 using MT.FreeCourse.Services.Basket.Services;
 using MT.FreeCourse.Services.Basket.Settings;
 using MT.FreeCourse.Shared.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 var requireAuthorizePolicy= new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {
     opt.Authority = builder.Configuration["IdentityServerURL"];
-    opt.Audience = "resource_catalog";
+    opt.Audience = "resource_basket";
     opt.RequireHttpsMetadata = false;
 });
 builder.Services.AddHttpContextAccessor();  
